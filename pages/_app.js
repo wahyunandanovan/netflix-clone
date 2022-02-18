@@ -1,0 +1,30 @@
+import Head from "next/head";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { CacheProvider } from "@emotion/react";
+import theme from "../utils/theme";
+import createEmotionCache from "../utils/createEmotionCache";
+import AuthStateChangeProvider from "../context/auth";
+import "../styles/globals.css";
+
+const clientSideEmotionCache = createEmotionCache();
+
+function MyApp(props) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  return (
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <link rel="shortcut icon" href="nficon2016.ico" />
+        <title>Netflix - MUI</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {/* <AuthStateChangeProvider /> */}
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </CacheProvider>
+  );
+}
+
+export default MyApp;
